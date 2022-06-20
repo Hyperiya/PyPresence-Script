@@ -19,34 +19,36 @@ def ply_now(process):
     else:
         return False 
 
-while True:
-    cpu_per = round(psutil.cpu_percent(),1) 
-    mem = psutil.virtual_memory()
-    mem_per = round(psutil.virtual_memory().percent,1)  
-    iter = psutil.process_iter(["name", "exe"])    
-    print(iter)
-    
-    playing = list(filter(ply_now, iter))
-    open = "nothing"
-    if len(playing)>0:
-        p = playing[0]
-        print(p)
-        exe_name = p.info['name']
-        open = app_pretty_name[exe_name]
+def run:
+    while True:
+        cpu_per = round(psutil.cpu_percent(),1) 
+        mem = psutil.virtual_memory()
+        mem_per = round(psutil.virtual_memory().percent,1)  
+        iter = psutil.process_iter(["name", "exe"])    
+        print(iter)
         
-    result = RPC.update( 
-        large_image = "turts",
-        small_image = "verify",
-        small_text = "Verified",
-        large_text = "Syrup",
-        details = "bored...",
-        state = "playing "+open,
-        buttons = [{"label": "RAM: "+str(mem_per)+"%", "url": "https://warframe.market/profile/ViviPlaysX"}, {"label": "CPU "+str(cpu_per)+"%", "url": "https://steamcommunity.com/id/HyperionVCZ/home"}]
-    )
-    print(result)    
-    time.sleep(10) 
+        playing = list(filter(ply_now, iter))
+        open = "nothing"
+        if len(playing)>0:
+            p = playing[0]
+            print(p)
+            exe_name = p.info['name']
+            open = app_pretty_name[exe_name]
+            
+        result = RPC.update( 
+            large_image = "turts",
+            small_image = "verify",
+            small_text = "Verified",
+            large_text = "Syrup",
+            details = "bored...",
+            state = "playing "+open,
+            buttons = [{"label": "RAM: "+str(mem_per)+"%", "url": "https://warframe.market/profile/ViviPlaysX"}, {"label": "CPU "+str(cpu_per)+"%", "url": "https://steamcommunity.com/id/HyperionVCZ/home"}]
+        )
+        print(result)    
+        time.sleep(10) 
     
-
+if __name__ == "__main__":
+    run()
 
 
 
